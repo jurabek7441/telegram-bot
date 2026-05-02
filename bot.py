@@ -1,8 +1,9 @@
 import telebot
 import google.generativeai as genai
 
-TELEGRAM_TOKEN = "8526653860:AAEX8ROTNpbRnFVYHiD9_yROP2DZtp27Hpg"
-GEMINI_KEY = "AIzaSyCag9axXrURvZJEUeO3glNHDd8x35Gi4co"
+import os
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+GEMINI_KEY = os.environ.get("GEMINI_KEY")
 
 genai.configure(api_key=GEMINI_KEY)
 model = genai.GenerativeModel("gemini-3-flash-preview")
