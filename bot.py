@@ -1,21 +1,21 @@
 import os
 import telebot
-from google import genai
+from groq import Groq
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
-GEMINI_KEY = os.environ.get("GEMINI_KEY")
+GROQ_KEY = os.environ.get("GROQ_KEY")
 
-client = genai.Client(api_key=GEMINI_KEY)
+client = Groq(api_key=GROQ_KEY)
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
 
 @bot.message_handler(func=lambda m: True)
 def handle(message):
     try:
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=message.text
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": message.text}]
         )
-        bot.reply_to(message, response.text)
+        bot.reply_to(message, response.choices[0].message.content)
     except Exception as e:
         bot.reply_to(message, f"Ошибка: {e}")
 
