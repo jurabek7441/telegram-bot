@@ -15,7 +15,7 @@ bot = telebot.TeleBot(TELEGRAM_TOKEN)
 def handle(message):
     try:
         response = client.chat.completions.create(
-            model="google/gemini-2.0-flash-exp:free",
+            model="google/gemini-2.0-flash:free",
             messages=[{"role": "user", "content": message.text}]
         )
         bot.reply_to(message, response.choices[0].message.content)
