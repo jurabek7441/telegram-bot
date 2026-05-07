@@ -18,8 +18,11 @@ def handle(message):
             model="openrouter/free",
             messages=[{"role": "user", "content": message.text}]
         )
-        bot.reply_to(message, response.choices[0].message.content)
+        reply = response.choices[0].message.content
+        if reply and reply.strip():
+            bot.reply_to(message, reply)
+        else:
+            bot.reply_to(message, "Попробуйте ещё раз.")
     except Exception as e:
         bot.reply_to(message, f"Ошибка: {e}")
-
 bot.polling()
